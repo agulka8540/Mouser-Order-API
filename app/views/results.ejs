@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="/vendor/jquery-3.4.1.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> 
+        <link rel='stylesheet' href='/css/style.css' />
+    </head>
+    
+    <body class="bg-secondary">
+        <script>    
+            var mouserObj =<%- JSON.stringify(mouserObj)%>;
+            var BOMObj =<%- JSON.stringify(BOMObj)%>;
+        </script>
+        <div class="container">
+            <h1 class="text-center mb-4">BOM Overview</h1>
+            <input id="multiplier" type="number" name="multiplier">
+            <div class=" table-responsive">
+                <table class="table table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Datasheet</th>
+                            <th scope="col">Part Nr</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Required<br>Quantity</th>
+                            <th scope="col">Order<br>Quantity</th>
+                            <th scope="col">Total €</th>
+                            <th scope="col">Select</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>      
+                        <% for (var key in mouserObj) { 
+                            var item =  mouserObj[key]; 
+                            var PartsArray = item.SearchResults.Parts; %>      
+                            <thead class="thead-light"><tr><th scope="col"><%= BOMObj[key]["part number"] %></th><th></th><th></th><th></th><th></th><th></th><th><th></th></th><th></th></tr></thead>    
+                            <% PartsArray.forEach(function (part, index) { %>
+                                <tr id="<%=`row-${key}-${index}`%>">
+                                    <td><img src="<%= part.ImagePath %>" class="img-responsive part-image">
+                                      <%= part.ManufacturerPartNumber %>
+                                    </td>
+                                    <td><a href="<%= part.DataSheetUrl %>" target="_blank">Datasheet</a></td>
+                                    <td><a href="<%= part.ProductDetailUrl %>" id="<%=`partnr-${key}-${index}`%>" target="_blank"><%=part.MouserPartNumber %></a><br><%=part.Availability %></td>
+                                    <td id="<%=`prbr-${key}-${index}`%>" class="prbr"></td>
+                                    <td class="reqqty" id="<%=`reqqty-${key}-${index}`%>"><%= BOMObj[key].quantity %></td>
+                                    <td><input id="<%=`optqty-${key}-${index}`%>" type="number" name="qty" value="x"></td>
+                                    <td id="<%=`total-${key}-${index}`%>" class="total€"></td>
+                                    <td><input id="<%=`select-${key}-${index}`%>" type="radio" name="<%= BOMObj[key]['part number'] %>"></td>
+                                    <td id="<%=`nr-${part.MouserPartNumber}` %>" class="status"></td>
+                                </tr>
+                            <% }); %>  
+                        <% } %>
+                    </tbody>
+                    <thead class="thead-dark">
+                        <tr><th>Order Price</th><th></th><th></th><th></th><th></th><th></th><th id="order-total"></th><th></th><th></th></tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead id="order-results" class="thead-dark"></thead>
+                </table>
+            </div>
+            <button id="submitRes" class="btn btn-info">Submit</button>
+        </div>
+        <script src="/js/scripts.js"></script>
+    </body>
+</html>

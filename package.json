@@ -1,0 +1,24 @@
+{
+  "name": "bom-2-order-app",
+  "version": "1.0.0",
+  "description": "app facilitating parts order",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e css,ejs,js,json --watch app"
+  },
+  "author": "Aga",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "csvtojson": "^2.0.10",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-formidable": "^1.2.0",
+    "express-partials": "^0.3.0",
+    "formidable": "^1.2.1",
+    "nodemon": "^2.0.4",
+    "request": "^2.88.0",
+    "request-rate-limiter": "^2.0.3"
+  }
+}
